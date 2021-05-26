@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\PostController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/' , function (){
+    if (Gate::allows('create-post'))
+        dd(1);
+    dd(2);
+})->middleware('auth:sanctum');
 
 Route::post('/register' , [ AuthController::class , 'register' ]);
 Route::post('/login' , [ AuthController::class , 'login' ]);
