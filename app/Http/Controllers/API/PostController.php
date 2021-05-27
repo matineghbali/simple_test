@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -24,22 +25,16 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param PostRequest $request
      * @return Collection|Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         if (!Gate::allows('create-post'))
             return response([
                 'data' => 'شما اجازه دسترسی برای ایجاد پست را ندارید',
                 'status' => 401
             ]);
-
-        $request->validate([
-            'name' => 'required' ,
-            'image' => 'required' ,
-            'description' => 'required' ,
-        ]);
 
         return auth()->user()->posts()->create($request->all());
     }
