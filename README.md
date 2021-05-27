@@ -1,6 +1,6 @@
 # simple_test
 
-Project is in the maste branch
+Project is in the master branch
 
 Please Import database and postman:
 
