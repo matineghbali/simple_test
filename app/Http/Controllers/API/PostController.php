@@ -7,6 +7,7 @@ use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -28,6 +29,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows('create-post'))
+            return response([
+                'data' => 'شما اجازه دسترسی برای ایجاد پست را ندارید',
+                'status' => 401
+            ]);
+
         $request->validate([
             'name' => 'required' ,
             'image' => 'required' ,
